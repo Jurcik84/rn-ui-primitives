@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -12,12 +12,19 @@ import ContactDetails from "./App/screens/ContactDetails";
 import ActionsList from './App/screens/ActionsList';
 import ActionDetails from './App/screens/ActionDetails';
 import Settings from './App/screens/Settings';
+import Loading from "./App/screens/Loading";
+import SignIn from './App/screens/SignIn';
+import SignUp from './App/screens/SignUp';
+import Modal from './App/screens/Modal';
+
+
 
 
 const ContactsStack = createStackNavigator();
 const ActionsStack = createStackNavigator();
 const AppTabs = createBottomTabNavigator();
 const AppDrawer = createDrawerNavigator();
+const RootStack = createStackNavigator();
 
 
 const ContactsStackScreen = () => (
@@ -86,12 +93,54 @@ const AppDrawerScreen = () => (
     </AppDrawer.Navigator>
 );
 
+const AuthStack = createStackNavigator();
+const AuthStackScreen = () => (
+    <AuthStack.Navigator>
+        <AuthStack.Screen name="SignIn" component={SignIn} />
+        <AuthStack.Screen name="SignUp" component={SignUp} />
+    </AuthStack.Navigator>
+);
 
-export default () => (
-    <NavigationContainer>
-        <AppDrawerScreen />
-    </NavigationContainer>
-)
+
+const RootStackScreen = () => {
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    const [user, setUser] = React.useState<null | {}>({});
+
+    // React.useEffect(() => {
+    //     setTimeout(() => {
+    //         setIsLoading(!isLoading);
+    //         setUser({});
+    //     }, 500);
+    // }, []);
+
+
+    return <RootStack.Navigator
+        headerMode="none"
+        screenOptions={{ animationEnabled: false }}
+        mode="modal"
+    >
+        {isLoading ? (
+            <RootStack.Screen name="Loading" component={Loading} />
+        ) : user ? (
+            <RootStack.Screen name="AppDrawerScreen" component={AppDrawerScreen} />
+        ) : (
+                    <RootStack.Screen name="AuthStackScreen" component={AuthStackScreen} />
+                )}
+        <RootStack.Screen
+            name="Modal"
+            component={Modal}
+            options={{ animationEnabled: true, }}
+        />
+    </RootStack.Navigator>
+}
+
+export default () => {
+    return (
+        <NavigationContainer>
+            <RootStackScreen />
+        </NavigationContainer>
+    );
+};
 
 // export default ({ navigation }) => (
 //     <SafeAreaView>
@@ -106,4 +155,11 @@ export default () => (
 //         }}
 //       />
 //     </SafeAreaView>
+//   );
+
+// export default ({ navigation }) => (
+//     <>
+//       <Button title="Sign In" onPress={() => alert('todo!')} />
+//       <Button title="Sign Up" onPress={() => navigation.push('SignUp')} />
+//     </>
 //   );
