@@ -4,7 +4,8 @@ import { Alert, View, Text, StyleSheet, AppState } from 'react-native';
 const style = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        flex: 1
+        flex: 1,
+        marginHorizontal: 20
     },
     button: {
         height: 70,
@@ -29,7 +30,10 @@ export default class RNAppState extends React.Component<{}, {}> {
     public render() {
 
         return <View style={[style.container]}>
-            <Text>AppState will tell you whether the app is active, inactive of in the background</Text>
+            <Text style={{
+                fontSize: 22,
+                marginBottom: 20
+            }}>AppState will tell you whether the app is active, inactive of in the background</Text>
             <Text>AppState:  {this.state.appState} </Text>
         </View>
     }
