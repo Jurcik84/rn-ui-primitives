@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+
+import { Provider } from 'react-redux';
+import store from './App/store'
+
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -136,9 +140,11 @@ const RootStackScreen = () => {
 
 export default () => {
     return (
+        <Provider store={store}>
         <NavigationContainer>
             <RootStackScreen />
         </NavigationContainer>
+        </Provider>
     );
 };
 
