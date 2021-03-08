@@ -15,6 +15,9 @@ const style = StyleSheet.create({
     }
 })
 
+
+
+
 export default class RNAppState extends React.Component<{}, {}> {
     interval: unknown = null;
     state = {

@@ -37,6 +37,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Program requires GPS to track cars and job orders</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>Privacy-Camera Usage Description</key>

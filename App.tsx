@@ -5,11 +5,11 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Easing } from 'react-native-reanimated';
 // import Navigation from "./navigation";
 // import RNAlert from './App/demo-apps/demo.alert'
-import RNAppState from './App/demo-apps/demo.appstate'
+import RNGeolocation from './App/demo-apps/demo.geolocation-api'
 
 const App = () => {
   return (
-    <RNAppState />
+    <RNGeolocation />
   );
 };
 
