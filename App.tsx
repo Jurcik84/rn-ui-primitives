@@ -1,118 +1,119 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Text, SafeAreaView } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
-import Geolocation from '@react-native-community/geolocation';
+import { Text, SafeAreaView, FlatList, StyleSheet, View } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+import NetInfo from "@react-native-community/netinfo";
 
+function useNetInfo() {
 
+  const [isConnected, setIsConnected] = useState<Boolean>(false);
+  const [connectionType, setConnectionType] = useState<String>("")
 
-type ILocation = {
-  latitude: number,
-  longitude: number
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(({ type, isConnected }) => {
+      // console.log("Connection type", type);
+      // console.log("Is connected?", isConnected);
+      setIsConnected(isConnected);
+      setConnectionType(type);
+    });
+
+    return () => {
+      unsubscribe();
+    }
+  })
+
+  return {
+    isConnected
+  }
 }
 
 
-function useGeolocation() {
-  const [locations, setCoords] = useState<Array<ILocation>>([]);
-  const [mapError, setMapError] = useState<null | string>(null);
-  let _watchMapId:unknown = null;
+type UserType = {
+  userId: number,
+  id: number,
+  title: string,
+  completed: boolean
+}
 
-  const watchConfig = {
-    enableHighAccuracy: true,
-    distanceFilter: 100,
-    interval: 5000,
-    fastestInterval: 2000
-  };
+const strUri = "https://jsonplaceholder.typicode.com/todos/";
 
+function useLocalStorage(dataFromServer: unknown) {
+  const key = '@data';
+  const [storedData, setStoredData] = useState<unknown>();
 
-  // ok handler
-  const geoWatchSuccHandler = ({ coords }) => {
-    const list = [...locations, coords]
-    setCoords(list);
-  };
+  async function saveDataToLocStorage(data: unknown) {
+    await AsyncStorage.setItem(key, JSON.stringify(data));
+  }
 
-  // error handler
-  const geoWatchErrorHandler = ({ message = "" }) => {
-    setMapError(message)
-  };
-
-  // geo watch handler
-  const clearGeoWatch = (_watchMapId: unknown) => Geolocation.clearWatch(Number(_watchMapId));
-
-
-  useEffect(() => {
-    _watchMapId = Geolocation.watchPosition(geoWatchSuccHandler, geoWatchErrorHandler,
-      watchConfig
-    );
-  }, [locations]);
-
-  useEffect(() => {
-    return () => {
-      if (_watchMapId !== null) {
-        clearGeoWatch(_watchMapId)
-      }
+  async function getStoredData() {
+    const result = await AsyncStorage.getItem(key);
+    if (result) {
+      setStoredData(result);
     }
-  }, [])
+  }
+
+  useEffect(() => {
+
+  }, []);
+
+  return { saveDataToLocStorage, getStoredData, storedData }
+}
+
+
+function useFetch(strUri: string) {
+  const [userList, setuserList] = useState<Array<UserType>>([]);
+  const { } = useLocalStorage(userList)
+
+  useEffect(() => {
+    fetch(strUri)
+      .then(response => response.json())
+      .then(json => setuserList(json))
+      .catch(({ message }) => console.log('error useFetch', message))
+
+  }, []);
 
   return {
-    locations
+    userList
   }
 }
 
 
 
-function App() {
-  const [region, setRegion] = useState({})
-  const { locations = [] } = useGeolocation();
+export default function App() {
+  const { isConnected } = useNetInfo();
+  const { userList = [] } = useFetch(strUri);
 
 
+  const getListViewItem = (item) => {
+    console.log(item)
+  }
   return (
-    <SafeAreaView style={{
-      flex: 1
-    }} >
-  
+    <SafeAreaView style={styles.container}>
       {
-        locations && locations.length > 0 && <MapView
-          style={{
-            flex: 1,
-            borderWidth: 1
-          }}
-          region={{
-            latitude: locations[0].latitude,
-            longitude: locations[0].longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-
-          showsUserLocation={ true } 
-
-        // //   onRegionChange={ region => {
-        // //     //console.log("Region Changed");
-        // //     //this.setState({region});
-        // //  } }
-        //  onRegionChangeComplete={ region => {
-        //     console.log("Region change complete");
-        //     setRegion({region});
-        //  } }
-    
-        >
-          {
-            locations?.map((location: ILocation, index: number) => {
-              return <Marker key={index}
-                coordinate={{
-                  latitude: location?.latitude,
-                  longitude: location?.longitude
-                }}
-                title="Hello"
-                description="This is marker"
-              />
-            })
-          }
-        </MapView>
+        isConnected ?  <FlatList
+        keyExtractor={(item) => String(item.id)}
+        data={userList}
+        renderItem={({ item }) => <Text style={styles.item}
+          onPress={getListViewItem}>{item.title}</Text>}
+        ItemSeparatorComponent={() => <View style={{
+          borderBottomWidth: 1,
+          borderColor: '#cdcdcd'
+        }}></View>}
+      />: <Text>Macka</Text>
       }
     </SafeAreaView>
   );
 };
 
 
-export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})
