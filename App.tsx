@@ -9,14 +9,16 @@ function useNetInfo() {
   const [isConnected, setIsConnected] = useState<Boolean>(false);
   const [connectionType, setConnectionType] = useState<String>("")
 
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(({ type, isConnected }) => {
-      // console.log("Connection type", type);
-      // console.log("Is connected?", isConnected);
-      setIsConnected(isConnected);
-      setConnectionType(type);
-    });
 
+  const handler = ({ type, isConnected }: {type: string, isConnected: boolean}) => {
+    // console.log("Connection type", type);
+    // console.log("Is connected?", isConnected);
+    setIsConnected(isConnected);
+    setConnectionType(type);
+  };
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(handler);
     return () => {
       unsubscribe();
     }
@@ -78,11 +80,9 @@ function useFetch(strUri: string) {
 }
 
 
-
 export default function App() {
   const { isConnected } = useNetInfo();
   const { userList = [] } = useFetch(strUri);
-
 
   const getListViewItem = (item) => {
     console.log(item)
@@ -90,16 +90,20 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       {
-        isConnected ?  <FlatList
-        keyExtractor={(item) => String(item.id)}
-        data={userList}
-        renderItem={({ item }) => <Text style={styles.item}
-          onPress={getListViewItem}>{item.title}</Text>}
-        ItemSeparatorComponent={() => <View style={{
-          borderBottomWidth: 1,
-          borderColor: '#cdcdcd'
-        }}></View>}
-      />: <Text>Macka</Text>
+        isConnected ? <FlatList
+          keyExtractor={(item) => String(item.id)}
+          data={userList}
+          renderItem={({ item }) => <View style={{
+            height: 60,
+          }}>
+            <Text style={styles.item}
+            onPress={getListViewItem}>{item.title}</Text>
+          </View>}
+          ItemSeparatorComponent={() => <View style={{
+            borderBottomWidth: 1,
+            borderColor: '#cdcdcd'
+          }}></View>}
+        /> : <Text>Macka</Text>
       }
     </SafeAreaView>
   );
