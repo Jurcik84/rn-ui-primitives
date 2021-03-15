@@ -1,123 +1,64 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import { Text, SafeAreaView, FlatList, StyleSheet, View } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
-import NetInfo from "@react-native-community/netinfo";
-
-function useNetInfo() {
-
-  const [isConnected, setIsConnected] = useState<Boolean>(false);
-  const [connectionType, setConnectionType] = useState<String>("")
+import React, { useEffect, useState } from 'react';
+import { View, Text, Dimensions, Platform, StyleSheet } from 'react-native';
 
 
-  const handler = ({ type, isConnected }: {type: string, isConnected: boolean}) => {
-    // console.log("Connection type", type);
-    // console.log("Is connected?", isConnected);
-    setIsConnected(isConnected);
-    setConnectionType(type);
-  };
+function usePlatformDetection() {
 
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(handler);
-    return () => {
-      unsubscribe();
-    }
-  })
+  const devicePlatform = Platform.OS || "Platform.OS is N/A";
+  const deviceOSVersion= Platform.Version || "Platform.Version is N/A";
 
-  return {
-    isConnected
-  }
+  return Object.freeze({
+    devicePlatform,
+    deviceOSVersion
+  });
+
 }
 
+type DeviceOrientation = "portrait" | "landscape"
 
-type UserType = {
-  userId: number,
-  id: number,
-  title: string,
-  completed: boolean
-}
 
-const strUri = "https://jsonplaceholder.typicode.com/todos/";
+function useDimensionManager() {
 
-function useLocalStorage(dataFromServer: unknown) {
-  const key = '@data';
-  const [storedData, setStoredData] = useState<unknown>();
+  const [deviceOrientation, setDeviceOrientaton] = useState<DeviceOrientation>('portrait');
 
-  async function saveDataToLocStorage(data: unknown) {
-    await AsyncStorage.setItem(key, JSON.stringify(data));
+  useEffect(useEffectCallback, []);
+
+  return Object.freeze({ deviceOrientation });
+
+  function orientationHandler() {
+    const { width, height } = Dimensions.get("window");
+    setDeviceOrientaton(width < height ? "portrait" : "landscape");
   }
 
-  async function getStoredData() {
-    const result = await AsyncStorage.getItem(key);
-    if (result) {
-      setStoredData(result);
-    }
-  }
-
-  useEffect(() => {
-
-  }, []);
-
-  return { saveDataToLocStorage, getStoredData, storedData }
-}
-
-
-function useFetch(strUri: string) {
-  const [userList, setuserList] = useState<Array<UserType>>([]);
-  const { } = useLocalStorage(userList)
-
-  useEffect(() => {
-    fetch(strUri)
-      .then(response => response.json())
-      .then(json => setuserList(json))
-      .catch(({ message }) => console.log('error useFetch', message))
-
-  }, []);
-
-  return {
-    userList
+  function useEffectCallback() {
+    Dimensions.addEventListener('change', orientationHandler);
   }
 }
-
 
 export default function App() {
-  const { isConnected } = useNetInfo();
-  const { userList = [] } = useFetch(strUri);
 
-  const getListViewItem = (item) => {
-    console.log(item)
-  }
-  return (
-    <SafeAreaView style={styles.container}>
-      {
-        isConnected ? <FlatList
-          keyExtractor={(item) => String(item.id)}
-          data={userList}
-          renderItem={({ item }) => <View style={{
-            height: 60,
-          }}>
-            <Text style={styles.item}
-            onPress={getListViewItem}>{item.title}</Text>
-          </View>}
-          ItemSeparatorComponent={() => <View style={{
-            borderBottomWidth: 1,
-            borderColor: '#cdcdcd'
-          }}></View>}
-        /> : <Text>Macka</Text>
-      }
-    </SafeAreaView>
-  );
-};
+  const { deviceOrientation = "", } = useDimensionManager();
+  const { devicePlatform,
+    deviceOSVersion } = usePlatformDetection();
 
-
+  return <View style={styles.container}>
+    <Text>Your device is in {deviceOrientation} mode</Text>
+    <Text>Your device is in {devicePlatform} Operate system</Text>
+    <Text>Your device is in {deviceOSVersion} Verson of Operate system</Text>
+  </View>
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 40,
+  }
 })
+
+
+
+
+// variables su identifikovatelne hotnoty podla ich mena
+// su hodnoty ktore su pomenovane , dane meno , id , identifiktator

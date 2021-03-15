@@ -4,8 +4,6 @@ import { View, Animated, Button } from 'react-native'
 // import Navigation from "./navigation";
 
 
-
-
 class RNAnimations extends React.Component<{}, {}> {
   marginTop = new Animated.Value(20);
   animate = () => {
