@@ -1,0 +1,175 @@
+//  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+
+
+
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, SafeAreaView, FlatList, StyleSheet, View } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+import NetInfo from "@react-native-community/netinfo";
+
+function useNetInfo() {
+
+  const [isConnected, setIsConnected] = useState<Boolean>(false);
+  const [connectionType, setConnectionType] = useState<String>("")
+
+
+  const handler = ({ type, isConnected }: {type: string, isConnected: boolean}) => {
+    // console.log("Connection type", type);
+    // console.log("Is connected?", isConnected);
+    setIsConnected(isConnected);
+    setConnectionType(type);
+  };
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(handler);
+    return () => {
+      unsubscribe();
+    }
+  })
+
+  return {
+    isConnected
+  }
+}
+
+
+type UserType = {
+  userId: number,
+  id: number,
+  title: string,
+  completed: boolean
+}
+
+const strUri = "https://jsonplaceholder.typicode.com/todos/";
+
+function useLocalStorage(dataFromServer: unknown) {
+  const key = '@data';
+  const [storedData, setStoredData] = useState<unknown>();
+
+  async function saveDataToLocStorage(data: unknown) {
+    await AsyncStorage.setItem(key, JSON.stringify(data));
+  }
+
+  async function getStoredData() {
+    const result = await AsyncStorage.getItem(key);
+    if (result) {
+      setStoredData(result);
+    }
+  }
+
+  useEffect(() => {
+
+  }, []);
+
+  return { saveDataToLocStorage, getStoredData, storedData }
+}
+
+
+function useFetch(strUri: string) {
+  const [userList, setuserList] = useState<Array<UserType>>([]);
+  const { } = useLocalStorage(userList)
+
+  useEffect(() => {
+    fetch(strUri)
+      .then(response => response.json())
+      .then(json => setuserList(json))
+      .catch(({ message }) => console.log('error useFetch', message))
+
+  }, []);
+
+  return {
+    userList
+  }
+}
+
+
+export default function App() {
+  const { isConnected } = useNetInfo();
+  const { userList = [] } = useFetch(strUri);
+
+  const getListViewItem = (item) => {
+    console.log(item)
+  }
+  return (
+    <SafeAreaView style={styles.container}>
+      {
+        isConnected ? <FlatList
+          keyExtractor={(item) => String(item.id)}
+          data={userList}
+          renderItem={({ item }) => <View style={{
+            height: 60,
+          }}>
+            <Text style={styles.item}
+            onPress={getListViewItem}>{item.title}</Text>
+          </View>}
+          ItemSeparatorComponent={() => <View style={{
+            borderBottomWidth: 1,
+            borderColor: '#cdcdcd'
+          }}></View>}
+        /> : <Text>Macka</Text>
+      }
+    </SafeAreaView>
+  );
+};
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})
+
+
+
+
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, SafeAreaView, FlatList, StyleSheet, View } from 'react-native'
+
+import Realm from 'realm';
+
+
+let realm = new Realm({
+  path: 'UserDatabase.realm',
+  schema: [
+    {
+      name: 'user_details',
+      properties: {
+        user_id: { type: 'int', default: 0 },
+        user_name: 'string',
+        user_contact: 'string',
+        user_address: 'string',
+      },
+    },
+  ],
+});
+
+
+realm.write(()=>{})
+
+
+export default function App() {
+  
+  return (
+    <SafeAreaView style={styles.container}>
+    
+    </SafeAreaView>
+  );
+};
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+});

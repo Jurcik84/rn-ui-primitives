@@ -1,64 +1,153 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, Platform, StyleSheet } from 'react-native';
+
+import React from 'react';
+import { Text, View } from 'react-native';
+import SyntaxHighlighter from 'react-native-syntax-highlighter'; // 2.0.0
+import { tomorrow } from 'react-syntax-highlighter/styles/prism' // 7.0.1
+
+const code = `
+
+// Primitives
+let name:string = ''
+let age:number = 1
+let isManager:boolean = true
+
+// Arrays
+let names:Array<string> = ["Juraj"];
+let ages:Array<number> = [12, 34, 77];
+let users:Array<boolean> = [true, false, true];
+
+// tutpels
+let user1: [string, number, boolean] = ["Jurja", 45, true]
 
 
-function usePlatformDetection() {
 
-  const devicePlatform = Platform.OS || "Platform.OS is N/A";
-  const deviceOSVersion= Platform.Version || "Platform.Version is N/A";
+// Objects
+let userDescription: {
+  name: string,
+  age: number,
+  isCoder: boolean,
+  isDancer: boolean
+} = {
+  name: 'Juraj',
+  age: 123,
+  isCoder: true,
+  isDancer: false
+}
 
-  return Object.freeze({
-    devicePlatform,
-    deviceOSVersion
-  });
+
+// typed object 2
+
+let anima: {
+
+  [key: string]: string | number
+  
+} = {
+  name: "Cat",
+  age: 12,
 
 }
 
-type DeviceOrientation = "portrait" | "landscape"
+
+// Enums
+enum Colors {Red, Green, Yellow}
 
 
-function useDimensionManager() {
-
-  const [deviceOrientation, setDeviceOrientaton] = useState<DeviceOrientation>('portrait');
-
-  useEffect(useEffectCallback, []);
-
-  return Object.freeze({ deviceOrientation });
-
-  function orientationHandler() {
-    const { width, height } = Dimensions.get("window");
-    setDeviceOrientaton(width < height ? "portrait" : "landscape");
-  }
-
-  function useEffectCallback() {
-    Dimensions.addEventListener('change', orientationHandler);
-  }
+enum DaysInWeek {
+  M = "Monday",
+  T = "Tuesday",
+  W = "Wednesday",
+  Th = "Thuesday",
+  Fr = "friday",
+  Sat = "Saturday",
+  Sun = "Sunday"
 }
 
-export default function App() {
+// Function type
+type FuncType1= ()=> void
+type FuncType2= (name: string)=> string
+type FuncType3= ()=> string
 
-  const { deviceOrientation = "", } = useDimensionManager();
-  const { devicePlatform,
-    deviceOSVersion } = usePlatformDetection();
 
-  return <View style={styles.container}>
-    <Text>Your device is in {deviceOrientation} mode</Text>
-    <Text>Your device is in {devicePlatform} Operate system</Text>
-    <Text>Your device is in {deviceOSVersion} Verson of Operate system</Text>
-  </View>
+// never
+// variable name cannot be given any value
+let name: never
+name = ""
+
+
+// any
+let name2:any = ""
+name2 = 2   // not complaining
+
+
+// Class example
+
+class Greeter {
+  greeting: string
+  constructor(message: string){
+    this.greeting = message
+  }
+  greet():string{
+    return this.greeting
+  }
+}
+let greeter = new Greeter('Hello Juraj')
+
+
+// let greeter = new Greeter([])
+// TS will complain about []
+
+
+// String Literal Types
+let value1: "Juraj" = "Juraj"
+value1 = "Peter" // TS will complain
+
+
+// Type Aliases and Union Types
+// enum-like typing
+
+`;
+
+
+
+// Type guarding functions
+
+function isString(value: any): value is string {
+    return typeof value === "string"
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 40,
+function example(foo: any){
+  if(isString(foo)){
+    console.log("foo is string")
   }
-})
+  else {
+    console.log("foo is not string")
+  }
+
+}
+
+example(123)
 
 
 
+export default class App extends React.Component {
 
-// variables su identifikovatelne hotnoty podla ich mena
-// su hodnoty ktore su pomenovane , dane meno , id , identifiktator
+  state = { code };
+  
+  render() {
+    return (
+      <View style={{ backgroundColor: '#E87A90', height: '100%' }}>
+        <Text style={{ marginTop: 30, marginBottom: 30, textAlign: 'center', fontSize: 22, fontWeight: '900' }}>React Native Syntax Higlighter</Text>
+        <SyntaxHighlighter
+          {...this.props}
+          style={tomorrow}
+          customStyle={{ padding: 20, margin: 0 }}
+          language='javascript'
+          fontSize={18}
+          highlighter="prism"
+        >
+          {this.state.code}
+        </SyntaxHighlighter>
+      </View>
+    );
+  }
+}
