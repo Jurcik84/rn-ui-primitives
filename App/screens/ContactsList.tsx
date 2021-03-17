@@ -1,6 +1,5 @@
 import React from "react";
 import { FlatList, TextBase, View, Text, Button } from "react-native";
-
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { Row, Separator } from "../components/Row";
