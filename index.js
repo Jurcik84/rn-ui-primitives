@@ -2,7 +2,6 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { AppRegistry, Platform } from 'react-native';
-
 import codePush from 'react-native-code-push';
 
 import App from './App';
@@ -28,3 +27,14 @@ const CodePushiedApp = codePush({
 })(App);
 
 AppRegistry.registerComponent(appName, () => App);
+
+
+
+
+
+
+// jaspar@weareassist.com
+// Me to Everyone (1:14 pm)
+// Juraj Hynek
+// 42 Hilldrop Road, N70JE
+// juraj.hynek@gmail.com
