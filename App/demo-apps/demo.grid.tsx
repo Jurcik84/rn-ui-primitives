@@ -11,7 +11,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
 const base = 16;
-const padding = base;
 
 const SCREEN_PADDING = 24;
 const Container = styled.View`
@@ -66,20 +65,8 @@ const HStack = styled.View`
   }};
 `;
 
-const Divider = styled.View`
-  height: 40px;
-`;
 
-const Title = styled.Text`
-  text-align: left;
-  font-size: 22px;
-`;
 
-const Jumbo = styled.View`
-  height: 230px;
-  border: 1px solid red;
-  border-radius: 16px;
-`;
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
 

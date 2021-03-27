@@ -171,8 +171,8 @@ const App = () => {
     <SafeAreaView style={[styles.container]}>
       <Animated.View style={[styles.header, {
          height: headerHeight,
-          justifyContent: 'center',
-          alignItems: 'center'
+         justifyContent: 'center',
+         alignItems: 'center'
       }]}>
         <Text style={{
           fontSize: 22
