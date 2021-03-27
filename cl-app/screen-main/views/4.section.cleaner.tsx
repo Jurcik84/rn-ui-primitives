@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef, useMemo} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Image} from 'react-native-elements/dist/image/Image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {
   Divider,
@@ -9,8 +9,10 @@ import {
   HStack,
   Container,
   Section,
+  Spacer,
 } from '../../components/layouts';
 import {ForEach} from '../../components/lists';
+import Text from '../../components/fonts';
 
 const styled = StyleSheet.create({
   section: {
@@ -25,71 +27,55 @@ const styled = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
-  cardTextWrapper: { paddingLeft: 12,
+  cardTextWrapper: {
+    paddingLeft: 12,
     paddingTop: 23,
     paddingBottom: 12,
     backgroundColor: 'white',
     borderBottomRightRadius: 16,
-    borderBottomLeftRadius: 16,}
+    borderBottomLeftRadius: 16,
+  },
 });
 
 export default function () {
-  const renderListitem = () => (
-    <TouchableOpacity>
-       <VStack
-      style={{
-        // borderWidth: 1,
-        marginRight: 21,
-        width: 154,
-      }}>
-      <Image
-        style={[styled.cardImage]}
-        source={{
-          uri:
-            'https://heymeoww.com/wp-content/uploads/2021/01/Cinnamon-kitty-my-hero.jpg',
-        }}
-      />
-      <Section
-        style={[styled.cardTextWrapper]}>
-        <Text>Some Title</Text>
-        <Text>Some</Text>
-      </Section>
-    </VStack>
+  const renderListitem = (item: any, index: number) => (
+    <TouchableOpacity key={index}>
+      <VStack
+        style={{
+          // borderWidth: 1,
+          marginRight: 21,
+          width: 154,
+        }}>
+        <Image
+          style={[styled.cardImage]}
+          source={{
+            uri:
+              'https://heymeoww.com/wp-content/uploads/2021/01/Cinnamon-kitty-my-hero.jpg',
+          }}
+        />
+        <Section style={[styled.cardTextWrapper]}>
+          <Text>Some Title</Text>
+          <Text>Some</Text>
+        </Section>
+      </VStack>
     </TouchableOpacity>
   );
 
   return (
     <Section
-      style={{
-        paddingTop: 23,
-        paddingLeft: 23,
-        paddingBottom: 23,
-        backgroundColor: '#F4F5F9',
-      }}>
-      <HStack
-        style={{
-          // borderWidth: 1,
-          marginRight: 12,
-        }}>
-        <Text
-          style={{
-            fontSize: 16,
-            color: 'black',
-            fontWeight: '800',
-          }}>
+      backgroundColor="#F4F5F9"
+      paddingTop={23}
+      paddingLeft={23}
+      paddingBottom={23}>
+      <HStack marginRight={23}>
+        <Text color="black" fontWeight="800">
           Categories
         </Text>
-        <Text
-          style={{
-            color: '#FF0049',
-            fontWeight: '700',
-          }}>
-          View All
-        </Text>
+        <Text fontWeight="700">Heere</Text>
       </HStack>
-      <Section>
-        <ForEach data={[1, 2, 3, 4, 5, 6, 7, 8]}>{renderListitem}</ForEach>
-      </Section>
+      <ForEach marginTop={23} data={[1, 2, 3, 4, 5, 6, 7, 8]}>
+        {renderListitem}
+      </ForEach>
     </Section>
   );
 }

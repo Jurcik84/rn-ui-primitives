@@ -1,6 +1,15 @@
 import React, {useState, useEffect, useRef, useMemo} from 'react';
 import {View, Text, Dimensions, Image} from 'react-native';
 
+// --- TOOLS ---
+// 1. GridHelper shows horizontal or vertical grid
+// that will help dev to visualy fins elements dimensions
+// 2. UtilImageAppDisplay
+// allows to add picture, that represent design
+// dev can code the ui according to pic
+// --- TOOLS ---
+
+
 export function GridHelper({
   columns = 12,
   bgcolor = '#ddd',

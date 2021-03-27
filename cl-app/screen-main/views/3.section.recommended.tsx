@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef, useMemo} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {Image} from 'react-native-elements/dist/image/Image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {
   Divider,
@@ -9,8 +9,10 @@ import {
   HStack,
   Container,
   Section,
+  Spacer,
 } from '../../components/layouts';
 import {ForEach} from '../../components/lists';
+import Text from '../../components/fonts';
 
 const styled = StyleSheet.create({
   section: {
@@ -19,75 +21,63 @@ const styled = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: 'yellow',
   },
+  cardImage: {
+    width: 154,
+    height: 86,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
+  cardTextWrapper: {
+    paddingLeft: 12,
+    paddingTop: 23,
+    paddingBottom: 12,
+    backgroundColor: 'white',
+    borderBottomRightRadius: 16,
+    borderBottomLeftRadius: 16,
+  },
 });
 
 export default function () {
-  const renderListitem = () => (
-    <TouchableOpacity>
-       <VStack
-      style={{
-        // borderWidth: 1,
-        marginRight: 21,
-        width:154,
-      }}>
-      <Image
+  const renderListitem = (item: any, index: number) => (
+    <TouchableOpacity key={index}>
+      <VStack
         style={{
-          width:154,
-          height: 86,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16
-        }}
-        source={{
-          uri:
-            'https://heymeoww.com/wp-content/uploads/2021/01/Cinnamon-kitty-my-hero.jpg',
-        }}
-      />
-      <Section
-        style={{
-          paddingLeft: 12,
-          paddingTop: 23,
-          paddingBottom: 12,
-          backgroundColor: 'white',
-          borderBottomRightRadius: 16,
-          borderBottomLeftRadius: 16
+          // borderWidth: 1,
+          marginRight: 21,
+          width: 154,
         }}>
-        <Text>Some Title</Text>
-        <Text>Some</Text>
-      </Section>
-    </VStack>
+        <Image
+          style={[styled.cardImage]}
+          source={{
+            uri:
+              'https://heymeoww.com/wp-content/uploads/2021/01/Cinnamon-kitty-my-hero.jpg',
+          }}
+        />
+        <Section style={[styled.cardTextWrapper]}>
+          <Text>Some Title</Text>
+          <Text>Some</Text>
+        </Section>
+      </VStack>
     </TouchableOpacity>
   );
 
   return (
     <Section
-      style={{
-        paddingTop: 23,
-        paddingLeft: 23,
-        paddingBottom: 23,
-        backgroundColor: '#F4F5F9',
-      }}>
-      <HStack style={{
-          // borderWidth: 1,
-          marginRight: 12
-        }}>
-        <Text style={{
-           fontSize: 16,
-            color: 'black',
-            fontWeight: '800'
-          }} >Categories</Text>
-        <Text style={{
-             fontWeight: '700',
-            color: "#FF0049"
-          }}>View All</Text>
+      backgroundColor="#F4F5F9"
+      // paddingRight is zero
+      paddingTop={23}
+      paddingLeft={23}
+      paddingBottom={23}>
+      <HStack marginRight={23}>
+        <Text color="black" fontWeight="800">
+          Categories
+        </Text>
+        <Text fontWeight="700">Heere</Text>
       </HStack>
-      <Divider
-        style={{
-          height: 16,
-        }}
-      />
-      <Section>
-        <ForEach data={[1, 2, 3, 4, 5, 6, 7, 8]}>{renderListitem}</ForEach>
-      </Section>
+      <ForEach
+      marginTop={23} data={[1, 2, 3, 4, 5, 6, 7, 8]}>
+        {renderListitem}
+      </ForEach>
     </Section>
   );
 }

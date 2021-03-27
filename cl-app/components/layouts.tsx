@@ -1,16 +1,14 @@
-import React, {useState, useEffect, useRef, useMemo} from 'react';
-import {
-  View,
-  Text,
-  Animated,
-  StyleSheet,
-  Image,
-  Dimensions,
-  Easing,
-  TouchableOpacity,
-} from 'react-native';
+import React, {FunctionComponent, ComponentProps} from 'react';
+import {View, StyleSheet} from 'react-native';
 
 import * as CONSTANTS from './index';
+
+//
+import {
+  transformPropsIntoStyle,
+  StylePropStyle,
+  LayoutTypes,
+} from './utils.propsToStyle';
 
 const styled = StyleSheet.create({
   container: {
@@ -35,285 +33,87 @@ const styled = StyleSheet.create({
   },
   section: {
     backgroundColor: 'white',
+    // marginVertical: CONSTANTS.BASE,
+    // marginHorizontal: CONSTANTS.BASE,
   },
 });
-
-const allStylesRN = [
-  'alignContent',
-  'alignItems',
-  'alignSelf',
-  'aspectRatio',
-  'backfaceVisibility',
-  'backgroundColor',
-  'borderBottomColor',
-  'borderBottomLeftRadius',
-  'borderBottomRightRadius',
-  'borderBottomWidth',
-  'borderColor',
-  'borderLeftColor',
-  'borderLeftWidth',
-  'borderRadius',
-  'borderRightColor',
-  'borderRightWidth',
-  'borderStyle',
-  'borderTopColor',
-  'borderTopLeftRadius',
-  'borderTopRightRadius',
-  'borderTopWidth',
-  'borderWidth',
-  'bottom',
-  'color',
-  'decomposedMatrix',
-  'direction',
-  'display',
-  'elevation',
-  'flex',
-  'flexBasis',
-  'flexDirection',
-  'flexGrow',
-  'flexShrink',
-  'flexWrap',
-  'fontFamily',
-  'fontSize',
-  'fontStyle',
-  'fontVariant',
-  'fontWeight',
-  'height',
-  'includeFontPadding',
-  'justifyContent',
-  'left',
-  'letterSpacing',
-  'lineHeight',
-  'margin',
-  'marginBottom',
-  'marginHorizontal',
-  'marginLeft',
-  'marginRight',
-  'marginTop',
-  'marginVertical',
-  'maxHeight',
-  'maxWidth',
-  'minHeight',
-  'minWidth',
-  'opacity',
-  'overflow',
-  'overlayColor',
-  'padding',
-  'paddingBottom',
-  'paddingHorizontal',
-  'paddingLeft',
-  'paddingRight',
-  'paddingTop',
-  'paddingVertical',
-  'position',
-  'resizeMode',
-  'right',
-  'rotation',
-  'scaleX',
-  'scaleY',
-  'shadowColor',
-  'shadowOffset',
-  'shadowOpacity',
-  'shadowRadius',
-  'textAlign',
-  'textAlignVertical',
-  'textDecorationColor',
-  'textDecorationLine',
-  'textDecorationStyle',
-  'textShadowColor',
-  'textShadowOffset',
-  'textShadowRadius',
-  'tintColor',
-  'top',
-  'transform',
-  'transformMatrix',
-  'translateX',
-  'translateY',
-  'width',
-  'writingDirection',
-  'zIndex',
-];
-
-
-type StylePropStyle = {
-  alignContent: unknown;
-  alignItems: unknown;
-  alignSelf: unknown;
-  aspectRatio: unknown;
-  backfaceVisibility: unknown;
-  backgroundColor: unknown;
-  borderBottomColor: unknown;
-  borderBottomLeftRadius: unknown;
-  borderBottomRightRadius: unknown;
-  borderBottomWidth: unknown;
-  borderColor: unknown;
-  borderLeftColor: unknown;
-  borderLeftWidth: unknown;
-  borderRadius: unknown;
-  borderRightColor: unknown;
-  borderRightWidth: unknown;
-  borderStyle: unknown;
-  borderTopColor: unknown;
-  borderTopLeftRadius: unknown;
-  borderTopRightRadius: unknown;
-  borderTopWidth: unknown;
-  borderWidth: unknown;
-  bottom: unknown;
-  color: unknown;
-  decomposedMatrix: unknown;
-  direction: unknown;
-  display: unknown;
-  elevation: unknown;
-  flex: unknown;
-  flexBasis: unknown;
-  flexDirection: unknown;
-  flexGrow: unknown;
-  flexShrink: unknown;
-  flexWrap: unknown;
-  fontFamily: unknown;
-  fontSize: unknown;
-  fontStyle: unknown;
-  fontVariant: unknown;
-  fontWeight: unknown;
-  height: unknown;
-  includeFontPadding: unknown;
-  justifyContent: unknown;
-  left: unknown;
-  letterSpacing: unknown;
-  lineHeight: unknown;
-  margin: unknown;
-  marginBottom: unknown;
-  marginHorizontal: unknown;
-  marginLeft: unknown;
-  marginRight: unknown;
-  marginTop: unknown;
-  marginVertical: unknown;
-  maxHeight: unknown;
-  maxWidth: unknown;
-  minHeight: unknown;
-  minWidth: unknown;
-  opacity: unknown;
-  overflow: unknown;
-  overlayColor: unknown;
-  padding: unknown;
-  paddingBottom: unknown;
-  paddingHorizontal: unknown;
-  paddingLeft: unknown;
-  paddingRight: unknown;
-  paddingTop: unknown;
-  paddingVertical: unknown;
-  position: unknown;
-  resizeMode: unknown;
-  right: unknown;
-  rotation: unknown;
-  scaleX: unknown;
-  scaleY: unknown;
-  shadowColor: unknown;
-  shadowOffset: unknown;
-  shadowOpacity: unknown;
-  shadowRadius: unknown;
-  textAlign: unknown;
-  textAlignVertical: unknown;
-  textDecorationColor: unknown;
-  textDecorationLine: unknown;
-  textDecorationStyle: unknown;
-  textShadowColor: unknown;
-  textShadowOffset: unknown;
-  textShadowRadius: unknown;
-  tintColor: unknown;
-  top: unknown;
-  transform: unknown;
-  transformMatrix: unknown;
-  translateX: unknown;
-  translateY: unknown;
-  width: unknown;
-  writingDirection: unknown;
-  zIndex: unknown;
-};
-
-type GeneralObjectType = {[propName: string]: unknown};
-
-function transformPropsIntoStyle(props: GeneralObjectType): GeneralObjectType {
-  const style = {};
-  Object.keys(props).forEach((propName:string) => {
-    if (allStylesRN.some((styleProp) => propName === styleProp)) {
-      style[propName] = props[propName];
-    }
-  });
-  return style;
-}
-
-// ----- BASE TYPE FOR LAYOUT
-type LayoutTypes = {
-  children?: JSX.Element | [] | null;
-  style?: {
-    [propName: string]: unknown;
-  };
-};
 
 interface DividerTypes extends LayoutTypes {
   size?: number;
 }
 
-export function Divider(props: DividerTypes): JSX.Element {
+export const Divider: FunctionComponent<
+  ComponentProps<typeof View> &
+    LayoutTypes &
+    Partial<StylePropStyle> &
+    DividerTypes
+> = (props) => {
   const {size = 1, children, style = {}} = props;
   const styleForElement = transformPropsIntoStyle(props);
   return (
     <View
-      {...styleForElement}
       style={[
         {
           width: '100%',
-          height: CONSTANTS.BASE * size,
+          height: 1,
+          backgroundColor: '#ccc',
+          marginVertical: 10,
         },
+        styleForElement,
         style,
       ]}>
       {children}
     </View>
   );
-}
+};
 
-export function HStack(
-  props: LayoutTypes & Partial<StylePropStyle>,
-): JSX.Element {
+export const Spacer: FunctionComponent<
+  ComponentProps<typeof View> & LayoutTypes & Partial<StylePropStyle>
+> = (props) => {
+  const {children, style = {}} = props;
+  const styleForElement = transformPropsIntoStyle(props);
+
+  return <View style={[styleForElement, style]}></View>;
+};
+
+export const HStack: FunctionComponent<
+  ComponentProps<typeof View> & LayoutTypes & Partial<StylePropStyle>
+> = (props) => {
   const {children, style = {}} = props;
   const styleForElement = transformPropsIntoStyle(props);
   return (
-    <View {...styleForElement} style={[styled.hstack, style]}>
-      {children}
-    </View>
+    <View style={[styled.hstack, styleForElement, style]}>{children}</View>
   );
-}
+};
 
-export function VStack(
-  props: LayoutTypes & Partial<StylePropStyle>,
-): JSX.Element {
-  const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
-  return (
-    <View {...styleForElement} style={[styled.vstack, style]}>
-      {children}
-    </View>
-  );
-}
-
-export function Container(
-  props: LayoutTypes & Partial<StylePropStyle>,
-): JSX.Element {
+export const VStack: FunctionComponent<
+  ComponentProps<typeof View> & LayoutTypes & Partial<StylePropStyle>
+> = (props) => {
   const {children, style = {}} = props;
   const styleForElement = transformPropsIntoStyle(props);
 
   return (
-    <View {...styleForElement} style={[styled.container, style]}>
-      {children}
-    </View>
+    <View style={[styled.vstack, styleForElement, style]}>{children}</View>
   );
-}
+};
 
-export function Section(
-  props: LayoutTypes & Partial<StylePropStyle>,
-): JSX.Element {
+export const Container: FunctionComponent<
+  ComponentProps<typeof View> & LayoutTypes & Partial<StylePropStyle>
+> = (props) => {
   const {children, style = {}} = props;
   const styleForElement = transformPropsIntoStyle(props);
-  return <View style={[styled.section, style]}>{children}</View>;
-}
+
+  return (
+    <View style={[styled.container, styleForElement, style]}>{children}</View>
+  );
+};
+
+export const Section: FunctionComponent<
+  ComponentProps<typeof View> & LayoutTypes & Partial<StylePropStyle>
+> = (props) => {
+  const {children, style = {}} = props;
+  const styleForElement = transformPropsIntoStyle(props);
+  return (
+    <View style={[styled.section, styleForElement, style]}>{children}</View>
+  );
+};

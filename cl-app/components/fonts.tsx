@@ -1,28 +1,17 @@
-import React, {useState, useEffect, useRef, useMemo} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {FunctionComponent} from 'react';
+import {Text} from 'react-native';
+import {transformPropsIntoStyle, StylePropStyle} from './utils.propsToStyle';
 
-const styled = StyleSheet.create({});
+type TextTypes = {
+  style: {};
+  children: any;
+};
 
+const TextView: FunctionComponent<StylePropStyle & TextTypes> = (props) => {
+  const {children, style = {}} = props;
+  const styleFromUtil = transformPropsIntoStyle(props);
 
-type TextType = {
-  fontWeight?: string,
-  font?: string,
-  foregroundColor?:string,
-  lineLimit?: number,
-  children?: any,
-  lineSpacing?: number
-}
+  return <Text style={[styleFromUtil, style]}>{children}</Text>;
+};
 
-type ButtonTypes = {
-  padding: number,
-  background: string,
-  foregroundColor: string,
-  clipShape: string
-}
-
-
-export default function (props: TextType) {
-  const {children,fontWeight,font} = props;
-
-  return <Text style={[]}>{children}</Text>;
-}
+export default TextView;

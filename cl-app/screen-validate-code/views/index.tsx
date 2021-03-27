@@ -32,28 +32,16 @@ const style = StyleSheet.create({
 export default function () {
   const data = Array.from(Array(100), (_, index) => index + 1);
   return (
-    <Container
-      style={{
-        padding: 23,
-        flex: 1,
-        height: 100,
-      }}>
-      <ForEach
-        style={{
-          borderWidth: 1,
-          height: 156,
-        }}
-        data={data}>
-        {(item: any, index: number) => {
+    <Container backgroundColor="red" padding={23} flex={1} height={156}>
+      <ForEach  height={156} data={data}>
+        {(item: unknown, index: number) => {
           return (
-            <VStack>
+            <VStack key={index}>
               <Section
-                style={{
-                  width: 156,
-                  height: 156,
-                  borderWidth: 1,
-                  marginRight: 10,
-                }}></Section>
+                width={156}
+                height={156}
+                borderWidth={1}
+                marginRight={10}></Section>
               <Text>Macka</Text>
               <Text>...</Text>
             </VStack>

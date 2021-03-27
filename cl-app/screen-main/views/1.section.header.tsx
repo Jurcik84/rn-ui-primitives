@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef, useMemo} from 'react';
 import {
   View,
-  Text,
   Animated,
   StyleSheet,
   Image,
@@ -23,27 +22,29 @@ import {
   Container,
   Section,
 } from '../../components/layouts';
+import Text from '../../components/fonts';
 
 export default function ({}) {
   return (
     <VStack
-      style={{
-        backgroundColor: '#FF0049',
-        height: 23 * 9,
-        justifyContent: 'center',
-        // alignItems: 'center'
-        padding: 23
-      }}>
-      <Text>Hey William</Text>
-      <Text>Can I help you something?</Text>
+      marginBottom={23}
+      padding={23}
+      backgroundColor="#FF0049"
+      height={23 * 9}
+      justifyContent="center">
+      <Text marginBottom={8} fontWeight={'800'} fontSize={17} color="#fff">
+        Hey William
+      </Text>
+      <Text marginBottom={8} fontSize={15} color="#fff">
+        Can I help you something?
+      </Text>
       <TextInput
-       placeholder="Search"
+        placeholder="Search"
         style={{
           // borderWidth: 1,
           padding: 23,
           borderRadius: 12,
-          backgroundColor: '#fff'
-
+          backgroundColor: '#fff',
         }}
       />
     </VStack>

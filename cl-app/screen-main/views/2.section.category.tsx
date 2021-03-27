@@ -72,14 +72,11 @@ const baseStyle = StyleSheet.create({
 
 export default function () {
   return (
-    <VStack
-      style={[baseStyle.vstack]}>
-      <HeaderSection title_left="Categories" title_right="View All" />
-      <Section>
-        <ForEach data={['#00ACF6', '#FFBC42', '#1DBF73', '#A375FF']}>
-          {(item) => <RenderListitem item={item} />}
-        </ForEach>
-      </Section>
-    </VStack>
+    <VStack    paddingLeft={23}>
+    <HeaderSection title_left="Categories" title_right="View All" />
+      <ForEach data={['#00ACF6', '#FFBC42', '#1DBF73', '#A375FF']}>
+        {(item,index) => <RenderListitem key={index} item={item} />}
+      </ForEach>
+  </VStack>
   );
 }

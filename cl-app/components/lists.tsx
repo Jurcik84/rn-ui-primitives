@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {FunctionComponent, ComponentProps} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {transformPropsIntoStyle, StylePropStyle} from './utils.propsToStyle';
+
+
+
+// TYPES
+// ComponentProps<typeof View>
+// ComponentProps<typeof Text>
+// ComponentProps<typeof ScrollView>
+
 
 import * as CONSTANTS from './index';
 
@@ -43,64 +51,30 @@ export const DATA = [
   },
 ];
 
-const styled = StyleSheet.create({
-  listContainer: {
-    width: 4 * CONSTANTS.BASE,
-    height: 4 * CONSTANTS.BASE,
-    borderWidth: 1,
-    borderRadius: 12,
-    marginRight: CONSTANTS.BASE,
-    padding: 32 / 5,
-  },
-});
-
-const listItemWithTextOnImage = () => (
-  <View style={[styled.listContainer]}>
-    <Text>Some Title</Text>
-  </View>
-);
-const listItemWithTextUnderImage = () => (
-  <View style={[styled.listContainer]}>
-    <Text>Some Title</Text>
-  </View>
-);
-// export function ForEach({data = [], children}) {
-//   return (
-//     // data?.map && data.map((item, index) => children && children(item, index))
-//     <FlatList
-//       keyExtractor={(item, index) => Math.random() * 1000 * index}
-//       horizontal
-//       showsHorizontalScrollIndicator={false}
-//       data={data}
-//       renderItem={({item}) => children && children(item)}
-//     />
-//   );
-// }
-
-
 type ForEachTypes = {
   data?: Array<any>;
   children?: any;
   horizontal?: boolean;
-  spacing?: number,
-  style?: {}
+  style?: {};
 };
 
-export function ForEach({
-  data = [],
-  children,
-  horizontal = true,
-  spacing=0,
-  style={}
-}: ForEachTypes) {
+export const ForEach: FunctionComponent<ComponentProps<typeof ScrollView> & ForEachTypes & Partial<StylePropStyle>>  = (props) => {
+  const {data = [], children, horizontal = true, style = {}} = props;
+  const styleForElement = React.useMemo(() => transformPropsIntoStyle(props), [
+    props,
+  ]);
+
   return (
-    <ScrollView contentContainerStyle={[style]} horizontal={horizontal}>
+    <ScrollView
+     showsHorizontalScrollIndicator={false}
+      contentContainerStyle={[styleForElement, style]}
+      horizontal={horizontal}>
       {data.map &&
         data.map((item, index) =>
           typeof children === 'function'
             ? children(item, index)
-            : () => <Text>N/A</Text>,
+            : () => <Text key={index}>N/A</Text>,
         )}
     </ScrollView>
   );
-}
+};
