@@ -20,7 +20,7 @@ const styled = StyleSheet.create({
   },
   hstack: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     // borderWidth: 1,
     // backgroundColor: 'green',
     // borderBottomWidth: 1

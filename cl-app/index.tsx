@@ -1,23 +1,35 @@
 import React from 'react';
-import HomeScreen from './screen-main/views/index'
-import SecurityCode from './screen-validate-code/views'
-import {BasicTextInput, SingleDigitInput, PasswordInput,MobileNumberInput, FullNameInput, EmailInput} from './components/inputs'
-import {VStack} from './components/layouts'
+import HomeScreen from './screen-main/views/index';
+import SecurityCode from './screen-validate-code/views';
+import {
+  BasicTextInput,
+  SingleDigitInput,
+  PasswordInput,
+  MobileNumberInput,
+  FullNameInput,
+  EmailInput,
+} from './components/inputs';
+import {CardWithTextOnImage, CardTextUnderImage,CardDoubleDecker} from './components/list.items';
+import {ProgressBarVerticalWithCircles, ProgressBarHorizontalList} from './components/progress'
+import {Dimensions} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 export default function () {
   return (
-   <VStack
-   marginTop={100}
-   padding={50}
-   borderWidth = {1}
-   flex={1}
-   
-   >
-      <BasicTextInput  />
+    <ScrollView contentContainerStyle={{
+      padding: 20
+    }}>
+      <ProgressBarHorizontalList />
+      <ProgressBarVerticalWithCircles />
+      <CardDoubleDecker />
+      <HomeScreen />
+      <CardWithTextOnImage />
+      <CardTextUnderImage />
+      <BasicTextInput />
       <SingleDigitInput />
       <PasswordInput />
       <MobileNumberInput />
       <FullNameInput />
       <EmailInput />
-   </VStack>
+    </ScrollView>
   );
 }
