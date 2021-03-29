@@ -15,16 +15,11 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 
-import {
-  Divider,
-  VStack,
-  HStack,
-  Container,
-  Section,
-} from '../../components/layouts';
+import {VStack} from '../../components/layouts';
 import Text from '../../components/fonts';
 
 export default function ({}) {
+ 
   return (
     <VStack
       marginBottom={23}
@@ -41,8 +36,9 @@ export default function ({}) {
       <TextInput
         placeholder="Search"
         style={{
+          height:50,
           // borderWidth: 1,
-          padding: 23,
+         paddingHorizontal: 12,
           borderRadius: 12,
           backgroundColor: '#fff',
         }}

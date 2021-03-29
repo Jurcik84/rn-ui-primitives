@@ -1,82 +1,50 @@
-import React, {useState, useEffect, useRef, useMemo} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Image} from 'react-native-elements/dist/image/Image';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React from 'react';
+import {View} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {Block} from '../../components/block';
 
-import {
-  Divider,
-  VStack,
-  HStack,
-  Container,
-  Section,
-} from '../../components/layouts';
-import {ForEach} from '../../components/lists';
+import {HStack, VStack} from '../../components/layouts';
+import {CardWithTextOnImage} from '../../components/list.items';
 
-const HeaderSectionStyle = StyleSheet.create({
-  hstack: {
-    marginRight: 12,
-    marginBottom: 23,
-  },
-  textLeft: {fontSize: 16, color: 'black', fontWeight: '800'},
-  textRight: {fontWeight: '700', color: '#FF0049'},
-});
+import {useMainScreenContext} from '../controller';
 
-function HeaderSection({title_left = '', title_right = ''}) {
+// https://blog.harveydelaney.com/creating-your-own-mini-redux-in-react/
+// https://dev.to/elisealcala/react-context-with-usereducer-and-typescript-4obm
+
+const App = () => {
+  const {
+    state: {users, loading, error},
+  } = useMainScreenContext();
+  // console.log('ctx', users, loading, error);
+  if (loading) return <Block.Text>...Loading</Block.Text>;
+  if (error) return <Block.Text>..Error</Block.Text>;
   return (
-    <HStack style={[HeaderSectionStyle.hstack]}>
-      <Text style={[HeaderSectionStyle.textLeft]}>{title_left}</Text>
-      <Text style={[HeaderSectionStyle.textRight]}>{title_right}</Text>
-    </HStack>
+    <VStack
+      paddingLeft={20}
+      paddingBottom={20}
+      // borderWidth={1}
+      borderBottomLeftRadius={12}
+      borderBottomRightRadius={12}>
+      <HStack
+        paddingRight={19}
+        marginBottom={20}
+        justifyContent="space-between">
+        <Block.Text fontWeight={'800'} h5>
+          Left Title
+        </Block.Text>
+        <Block.Text h6 color="red">
+          Right Title
+        </Block.Text>
+      </HStack>
+      <FlatList
+        keyExtractor={(item) => item.toString()}
+        horizontal
+        ItemSeparatorComponent={() => <View style={{width: 16}} />}
+        data={users}
+        renderItem={({item}) => <CardWithTextOnImage item={item} />}
+      />
+    </VStack>
   );
-}
+};
 
-const RenderListitemStyle = StyleSheet.create({
-  image: {
-    width: 90,
-    height: 90,
-    // borderWidth: 1,
-    marginRight: 21,
-    borderRadius: 12,
-    padding: 8,
-  },
-  cardText: {  position: 'absolute',
-  padding: 12,
-  color: '#fff',}
-});
-
-const RenderListitem = ({item}) => (
-  <TouchableOpacity>
-    <Section>
-    <Image
-      style={[{backgroundColor: item}, RenderListitemStyle.image]}
-      source={{
-        uri:
-          'https://heymeoww.com/wp-content/uploads/2021/01/Cinnamon-kitty-my-hero.jpg',
-      }}
-    />
-    <Text
-      style={[RenderListitemStyle.cardText]}>
-      Some Title
-    </Text>
-  </Section>
-  </TouchableOpacity>
-);
-
-const baseStyle = StyleSheet.create({
-  vstack: { paddingTop: 23,
-    paddingLeft: 23,
-    paddingBottom: 23,
-    height: 23 * 8,
-    backgroundColor: '#fff',}
-})
-
-export default function () {
-  return (
-    <VStack    paddingLeft={23}>
-    <HeaderSection title_left="Categories" title_right="View All" />
-      <ForEach data={['#00ACF6', '#FFBC42', '#1DBF73', '#A375FF']}>
-        {(item,index) => <RenderListitem key={index} item={item} />}
-      </ForEach>
-  </VStack>
-  );
-}
+export default App;

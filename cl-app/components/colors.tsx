@@ -1,8 +1,10 @@
-
-
-function color({red = 0, green = 0, blue = 0.5}){
-
-    return {
-        
-    }
-}
+const brGray = '#F4F5F9';
+const darkGray = '#7F7F7F';
+const middleGray = '#DFE1E6';
+const white = '#FFFFFF';
+const red = '#FF004F';
+const purple = '#A375FF';
+const green = '#1DBF73';
+const yellow = '#FFBC42';
+const blue = '#00ACF6';
+const black = '#151011';

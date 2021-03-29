@@ -113,6 +113,7 @@ export const ProgressBarHorizontalList: FunctionComponent<
       {progress.map(({status, msg=""}, index, self) => {
         const VerticalProgressItem = (
           <View
+           key={index}
             style={{
               height: 82,
               width: 2,
@@ -136,7 +137,8 @@ export const ProgressBarHorizontalList: FunctionComponent<
         );
         return (
           <HStack 
-         
+
+          key={index}
           paddingRight={16} height={66} >
             {circleProgressIndicator}
             <VStack>

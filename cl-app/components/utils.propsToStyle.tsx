@@ -95,75 +95,75 @@ const allStylesRN = [
 ];
 
 export type StylePropStyle = {
-  alignContent: any;
-  alignItems: any;
-  alignSelf: any;
-  aspectRatio: any;
+  alignContent: 'flex-start'|'flex-end'|'center'|'stretch'|'space-between'|'space-around';
+  alignItems: 'flex-start'| 'flex-end'| 'center'| 'stretch'| 'baseline';
+  alignSelf: 'auto'| 'flex-start'| 'flex-end'| 'center'| 'stretch'| 'baseline';
+  aspectRatio: number;
   backfaceVisibility: any;
   backgroundColor: any;
   borderBottomColor: any;
   borderBottomLeftRadius: any;
   borderBottomRightRadius: any;
-  borderBottomWidth: any;
+  borderBottomWidth: number;
   borderColor: any;
   borderLeftColor: any;
-  borderLeftWidth: any;
-  borderRadius: any;
+  borderLeftWidth: number;
+  borderRadius: number;
   borderRightColor: any;
-  borderRightWidth: any;
+  borderRightWidth: number;
   borderStyle: any;
   borderTopColor: any;
   borderTopLeftRadius: any;
   borderTopRightRadius: any;
   borderTopWidth: any;
-  borderWidth: any;
-  bottom: any;
+  borderWidth: number;
+  bottom: number | string;
   color: any;
   decomposedMatrix: any;
-  direction: any;
-  display: any;
+  direction: 'inherit' | 'ltr' |'rtl';
+  display: 'none'| 'flex';
   elevation: any;
-  flex: any;
+  flex: number;
   flexBasis: any;
-  flexDirection: any;
-  flexGrow: any;
-  flexShrink: any;
-  flexWrap: any;
+  flexDirection: 'row' | 'row-reverse'|  'column'|  'column-reverse';
+  flexGrow: number;
+  flexShrink: number;
+  flexWrap: 'wrap'| 'nowrap'| 'wrap-reverse';
   fontFamily: any;
-  fontSize: any;
+  fontSize: number;
   fontStyle: any;
   fontVariant: any;
   fontWeight: any;
-  height: any;
+  height: number;
   includeFontPadding: any;
-  justifyContent: any;
-  left: any;
+  justifyContent: 'flex-start'| 'flex-end'| 'center'| 'space-between'| 'space-around'| 'space-evenly';
+  left: number | string;
   letterSpacing: any;
   lineHeight: any;
-  margin: any;
-  marginBottom: any;
-  marginHorizontal: any;
-  marginLeft: any;
-  marginRight: any;
-  marginTop: any;
-  marginVertical: any;
-  maxHeight: any;
-  maxWidth: any;
-  minHeight: any;
-  minWidth: any;
-  opacity: any;
+  margin: number;
+  marginBottom: number;
+  marginHorizontal: number | string;
+  marginLeft: number;
+  marginRight: number;
+  marginTop: number;
+  marginVertical: number;
+  maxHeight: number;
+  maxWidth: number;
+  minHeight: number;
+  minWidth: number;
+  opacity: number;
   overflow: any;
   overlayColor: any;
-  padding: any;
-  paddingBottom: any;
-  paddingHorizontal: any;
-  paddingLeft: any;
-  paddingRight: any;
-  paddingTop: any;
-  paddingVertical: any;
-  position: any;
+  padding: number | string;
+  paddingBottom: number | string;
+  paddingHorizontal: number | string;
+  paddingLeft: number | string;
+  paddingRight: number | string;
+  paddingTop: number | string;
+  paddingVertical: number | string;
+  position: 'absolute'| 'relative';
   resizeMode: any;
-  right: any;
+  right:number | string;
   rotation: any;
   scaleX: any;
   scaleY: any;
@@ -171,7 +171,7 @@ export type StylePropStyle = {
   shadowOffset: any;
   shadowOpacity: any;
   shadowRadius: any;
-  textAlign: any;
+  textAlign: 'auto'| 'left'| 'right'| 'center'| 'justify';
   textAlignVertical: any;
   textDecorationColor: any;
   textDecorationLine: any;
@@ -180,33 +180,33 @@ export type StylePropStyle = {
   textShadowOffset: any;
   textShadowRadius: any;
   tintColor: any;
-  top: any;
+  top: number | string;
   transform: any;
   transformMatrix: any;
   translateX: any;
   translateY: any;
-  width: any;
+  width: number | string;
   writingDirection: any;
-  zIndex: any;
+  zIndex: number;
 };
 
 export type LayoutTypes = {
-    children?: JSX.Element[] | JSX.Element;
-    style?: {
-      [propName: string]: any;
-    };
+  children?: JSX.Element[] | JSX.Element;
+  style?: {
+    [propName: string]: any;
   };
+};
 
 export type GeneralObjectType = {[propName: string]: any};
 
 export function transformPropsIntoStyle(
-  props: GeneralObjectType,
+  props: GeneralObjectType
 ): GeneralObjectType {
-  const style = {};
+  const compStyle: GeneralObjectType = {};
   Object.keys(props).forEach((propName: string) => {
     if (allStylesRN.some((styleProp) => propName === styleProp)) {
-      style[propName] = props[propName];
+      compStyle[propName] = props[propName];
     }
   });
-  return style;
+  return compStyle;
 }

@@ -1,26 +1,25 @@
 import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
   ComponentProps,
   FunctionComponent,
 } from 'react';
 import {
   View,
   Text,
-  Animated,
-  StyleSheet,
   Image,
   Dimensions,
   Easing,
   TouchableOpacity,
 } from 'react-native';
 import {HStack, VStack} from './layouts';
+import {Icon} from 'react-native-elements';
+import {transformPropsIntoStyle} from './utils.propsToStyle'
+
+
+
 
 export const CardWithTextOnImage: FunctionComponent<
   ComponentProps<typeof View>
-> = () => {
+> = ({item: {title}}) => {
   return (
     <TouchableOpacity>
       <Image
@@ -31,6 +30,8 @@ export const CardWithTextOnImage: FunctionComponent<
         style={{
           width: 90,
           height: 90,
+          borderRadius: 12,
+      
         }}
       />
       <Text
@@ -40,7 +41,7 @@ export const CardWithTextOnImage: FunctionComponent<
           position: 'absolute',
           color: 'white',
         }}>
-        Some text
+        {title}
       </Text>
     </TouchableOpacity>
   );
@@ -59,8 +60,8 @@ export const CardTextUnderImage: FunctionComponent<
         style={{
           width: 154,
           height: 86,
-          borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
+          borderTopLeftRadius: 12
         }}
       />
       <VStack width={154} height={157} padding={12}>
@@ -90,17 +91,17 @@ export const CardDoubleDecker: FunctionComponent<
   ComponentProps<typeof View>
 > = () => {
   return (
-    <VStack 
-    borderRadius={12}
-    borderWidth={1}
-    borderColor={'##707070'}
-    padding={16}>
-      <HStack 
-      marginBottom={23}
-      paddingBottom={23}
-      borderBottomWidth={1}
-      borderBottomColor={'#707070'}
-      justifyContent="flex-start">
+    <VStack
+      borderRadius={12}
+      borderWidth={1}
+      borderColor={'##707070'}
+      padding={16}>
+      <HStack
+        marginBottom={23}
+        paddingBottom={23}
+        borderBottomWidth={1}
+        borderBottomColor={'#707070'}
+        justifyContent="flex-start">
         <Image
           source={{
             uri:
@@ -114,18 +115,27 @@ export const CardDoubleDecker: FunctionComponent<
           }}
         />
         <VStack>
-          <Text style={{
-                fontSize: 16,
-                fontWeight: '800'
-            }}>asda</Text>
-          <Text   style={{
-                fontSize: 12,
-                color: '#7F7F7F'
-            }}>asda</Text>
-          <Text   style={{
-                fontSize: 12,
-                color: '#7F7F7F'
-            }}>asda</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '800',
+            }}>
+            asda
+          </Text>
+          <Text
+            style={{
+              fontSize: 12,
+              color: '#7F7F7F',
+            }}>
+            asda
+          </Text>
+          <Text
+            style={{
+              fontSize: 12,
+              color: '#7F7F7F',
+            }}>
+            asda
+          </Text>
         </VStack>
       </HStack>
       <HStack>
@@ -141,18 +151,24 @@ export const CardDoubleDecker: FunctionComponent<
               borderRadius: 27,
               marginRight: 27,
               borderWidth: 6,
-              borderColor: 'gray'
+              borderColor: 'gray',
             }}
           />
           <VStack>
-            <Text style={{
+            <Text
+              style={{
                 fontSize: 16,
-                fontWeight: '800'
-            }}>asda</Text>
-            <Text  style={{
+                fontWeight: '800',
+              }}>
+              asda
+            </Text>
+            <Text
+              style={{
                 fontSize: 12,
-                color: '#7F7F7F'
-            }}>asda</Text>
+                color: '#7F7F7F',
+              }}>
+              asda
+            </Text>
           </VStack>
         </HStack>
         <Image
@@ -171,3 +187,4 @@ export const CardDoubleDecker: FunctionComponent<
     </VStack>
   );
 };
+

@@ -1,81 +1,55 @@
-import React, {useState, useEffect, useRef, useMemo} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Image} from 'react-native-elements/dist/image/Image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React from 'react';
+import {View} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {Block} from '../../components/block';
+import {HStack, VStack} from '../../components/layouts';
 
-import {
-  Divider,
-  VStack,
-  HStack,
-  Container,
-  Section,
-  Spacer,
-} from '../../components/layouts';
-import {ForEach} from '../../components/lists';
-import Text from '../../components/fonts';
+const bgColor = '#EDF1F766';
+const borderColor = '#CACADA52';
 
-const styled = StyleSheet.create({
-  section: {
-    width: 23 * 7,
-    height: 23 * 4.1,
-    borderWidth: 1,
-    backgroundColor: 'yellow',
-  },
-  cardImage: {
-    width: 154,
-    height: 86,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-  },
-  cardTextWrapper: {
-    paddingLeft: 12,
-    paddingTop: 23,
-    paddingBottom: 12,
-    backgroundColor: 'white',
-    borderBottomRightRadius: 16,
-    borderBottomLeftRadius: 16,
-  },
-});
-
-export default function () {
-  const renderListitem = (item: any, index: number) => (
-    <TouchableOpacity key={index}>
-      <VStack
-        style={{
-          // borderWidth: 1,
-          marginRight: 21,
-          width: 154,
-        }}>
-        <Image
-          style={[styled.cardImage]}
-          source={{
-            uri:
-              'https://heymeoww.com/wp-content/uploads/2021/01/Cinnamon-kitty-my-hero.jpg',
-          }}
-        />
-        <Section style={[styled.cardTextWrapper]}>
-          <Text>Some Title</Text>
-          <Text>Some</Text>
-        </Section>
-      </VStack>
-    </TouchableOpacity>
-  );
-
+const App = () => {
   return (
-    <Section
-      backgroundColor="#F4F5F9"
-      paddingTop={23}
-      paddingLeft={23}
-      paddingBottom={23}>
-      <HStack marginRight={23}>
-        <Text color="black" fontWeight="800">
-          Categories
-        </Text>
-        <Text fontWeight="700">Heere</Text>
+    <VStack
+      paddingTop={19}
+      backgroundColor={bgColor}
+      paddingLeft={20}
+      paddingBottom={20}>
+      <HStack
+        paddingRight={12}
+        marginBottom={20}
+        justifyContent="space-between">
+        <Block.Text fontWeight={'800'} h5>
+          Left Title
+        </Block.Text>
+        <Block.Text
+         h6
+        color="red">Right Title</Block.Text>
       </HStack>
-      <ForEach marginTop={23} data={[1, 2, 3, 4, 5, 6, 7, 8]}>
-        {renderListitem}
-      </ForEach>
-    </Section>
+      <FlatList
+          keyExtractor={item => item.toString()}
+        horizontal
+        ItemSeparatorComponent={() => <View style={{width: 16}} />}
+        data={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+        renderItem={() => (
+          <Block backgroundColor={'white'} height={157} width={154}>
+            <Block.Image
+              borderTopLeftRadius={12}
+              borderTopRightRadius={12}
+              height={86}
+              width={157}
+              marginBottom={12}
+              source={{
+                uri:
+                  'https://43d897265kne3ed0qv2ecjw2-wpengine.netdna-ssl.com/wp-content/uploads/2020/05/21591430_web1_KittenRescue-ADW-200520-kitten_2.jpg',
+              }}></Block.Image>
+            <Block.Text paddingLeft={12} h5>
+              Macka
+            </Block.Text>
+          </Block>
+        )}
+      />
+    </VStack>
   );
-}
+};
+
+export default App;
