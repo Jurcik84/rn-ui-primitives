@@ -28,18 +28,18 @@ export default function  App() {
     <ScrollView contentContainerStyle={{
       
     }}>
-      {/* <ProgressBarHorizontalList />
+      <ProgressBarHorizontalList />
       <ProgressBarVerticalWithCircles />
-      <CardDoubleDecker /> */}
+      <CardDoubleDecker />
       <HomeScreen />
-      {/* <CardWithTextOnImage />
+      {/* <CardWithTextOnImage /> */}
       <CardTextUnderImage />
       <BasicTextInput />
       <SingleDigitInput />
       <PasswordInput />
       <MobileNumberInput />
       <FullNameInput />
-      <EmailInput /> */}
+      <EmailInput />
     </ScrollView>
   );
 }

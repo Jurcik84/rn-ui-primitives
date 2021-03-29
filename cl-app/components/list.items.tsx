@@ -1,24 +1,15 @@
-import React, {
-  ComponentProps,
-  FunctionComponent,
-} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Dimensions,
-  Easing,
-  TouchableOpacity,
-} from 'react-native';
+import React, {ComponentProps, FunctionComponent} from 'react';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {HStack, VStack} from './layouts';
-import {Icon} from 'react-native-elements';
-import {transformPropsIntoStyle} from './utils.propsToStyle'
 
-
-
+type CardWithTextOnImageTypes = {
+  item: {
+    [key: string]: any;
+  };
+};
 
 export const CardWithTextOnImage: FunctionComponent<
-  ComponentProps<typeof View>
+  CardWithTextOnImageTypes & ComponentProps<typeof View>
 > = ({item: {title}}) => {
   return (
     <TouchableOpacity>
@@ -31,7 +22,6 @@ export const CardWithTextOnImage: FunctionComponent<
           width: 90,
           height: 90,
           borderRadius: 12,
-      
         }}
       />
       <Text
@@ -61,7 +51,7 @@ export const CardTextUnderImage: FunctionComponent<
           width: 154,
           height: 86,
           borderTopRightRadius: 12,
-          borderTopLeftRadius: 12
+          borderTopLeftRadius: 12,
         }}
       />
       <VStack width={154} height={157} padding={12}>
@@ -187,4 +177,3 @@ export const CardDoubleDecker: FunctionComponent<
     </VStack>
   );
 };
-

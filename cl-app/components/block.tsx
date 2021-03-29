@@ -9,6 +9,8 @@ type TextSizeTypes = {
   h2: boolean;
   h3: boolean;
   h4: boolean;
+  h5:boolean, h6:boolean,
+  children: string
 };
 
 type BlockTypes = StylePropStyle;
@@ -45,7 +47,7 @@ export class Block extends React.Component<
   };
 
   static Text = (
-    props: BlockTypes & TextSizeTypes & ComponentProps<typeof Text>,
+    props: Partial<BlockTypes & TextSizeTypes & ComponentProps<typeof Text>>,
   ) => {
     const styleFromProps = transformPropsIntoStyle(props);
     const {children = '', h1, h2, h3, h4, h5, h6, style = {}} = props;
@@ -80,13 +82,13 @@ export class Block extends React.Component<
       </Text>
     ) : null;
   };
-  static Title = (props: BlockTypess & ComponentProps<typeof Text>) => {
+  static Title = (props: Partial<BlockTypes & ComponentProps<typeof Text>>) => {
     const {children = ''} = props;
     return children && typeof children === 'string' ? (
       <Text>{children.toUpperCase()}</Text>
     ) : null;
   };
-  static Divider = (props: BlockTypess & ComponentProps<typeof View>) => {
+  static Divider = (props: Partial<BlockTypes & ComponentProps<typeof View>>) => {
     return (
       <View
         style={{
@@ -96,7 +98,7 @@ export class Block extends React.Component<
   };
   static HStack = HStack;
   static VStack = VStack;
-  static ForEach = (props: BlockTypes & ComponentProps<typeof FlatList>) => {
+  static ForEach = (props:Partial< BlockTypes & ComponentProps<typeof FlatList>>) => {
     return <FlatList {...props} />;
   };
   static Image = (props: BlockTypes & ComponentProps<typeof Image>) => {

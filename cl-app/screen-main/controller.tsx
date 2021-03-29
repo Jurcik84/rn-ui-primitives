@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useReducer,
   Reducer,
+  FunctionComponent
 } from 'react';
 
 // STATE TYPE
@@ -86,7 +87,7 @@ export const mainScreenReducer: Reducer<State, Actions> = (
   }
 };
 
-export function Root(props) {
+export const Root:FunctionComponent<{}> =(props)=> {
   const [state, dispatch] = useReducer(mainScreenReducer, initialState);
   useEffect(() => {
     dispatch({
