@@ -97,6 +97,7 @@ export const VStack: FunctionComponent<
   );
 };
 
+
 export const Container: FunctionComponent<
   ComponentProps<typeof View> & LayoutTypes & Partial<StylePropStyle>
 > = (props) => {
@@ -113,6 +114,7 @@ export const Section: FunctionComponent<
 > = (props) => {
   const {children, style = {}} = props;
   const styleForElement = transformPropsIntoStyle(props);
+
   return (
     <View style={[styled.section, styleForElement, style]}>{children}</View>
   );

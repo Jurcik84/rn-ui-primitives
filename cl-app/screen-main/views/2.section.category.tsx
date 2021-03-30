@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, ListRenderItem} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Block} from '../../components/block';
 
@@ -7,6 +7,11 @@ import {HStack, VStack} from '../../components/layouts';
 import {CardWithTextOnImage} from '../../components/list.items';
 
 import {useMainScreenContext} from '../controller';
+
+import {UserType} from '../screen.types';
+
+// UUID
+import {UUID} from '../../utils/uuid'
 
 // https://blog.harveydelaney.com/creating-your-own-mini-redux-in-react/
 // https://dev.to/elisealcala/react-context-with-usereducer-and-typescript-4obm
@@ -37,11 +42,13 @@ const App = () => {
         </Block.Text>
       </HStack>
       <FlatList
-        keyExtractor={(item) => item.toString()}
+        keyExtractor={(item: {item: UserType}): string =>UUID()}
         horizontal
         ItemSeparatorComponent={() => <View style={{width: 16}} />}
         data={users}
-        renderItem={({item}) => <CardWithTextOnImage item={item} />}
+        renderItem={({item}: {item: UserType}) => (
+          <CardWithTextOnImage item={item} />
+        )}
       />
     </VStack>
   );

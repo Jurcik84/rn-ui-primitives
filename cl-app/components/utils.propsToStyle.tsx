@@ -191,7 +191,7 @@ export type StylePropStyle = {
 };
 
 export type LayoutTypes = {
-  children?: JSX.Element[] | JSX.Element;
+  children?: React.ReactNode;
   style?: {
     [propName: string]: any;
   };
@@ -202,11 +202,18 @@ export type GeneralObjectType = {[propName: string]: any};
 export function transformPropsIntoStyle(
   props: GeneralObjectType
 ): GeneralObjectType {
+
+   // 
   const compStyle: GeneralObjectType = {};
+
+  // 
   Object.keys(props).forEach((propName: string) => {
     if (allStylesRN.some((styleProp) => propName === styleProp)) {
       compStyle[propName] = props[propName];
     }
   });
+
+  // 
+
   return compStyle;
 }

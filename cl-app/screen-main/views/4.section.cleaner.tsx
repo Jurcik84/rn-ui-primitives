@@ -3,7 +3,8 @@ import {View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {Block} from '../../components/block';
 import {HStack, VStack} from '../../components/layouts';
-
+import {UserType} from '../screen.types';
+import {UUID} from '../../utils/uuid'
 const bgColor = '#EDF1F766';
 const borderColor = '#CACADA52';
 
@@ -25,8 +26,8 @@ const App = () => {
          h6
         color="red">Right Title</Block.Text>
       </HStack>
-      <FlatList
-          keyExtractor={item => item.toString()}
+      <FlatList<User>
+       keyExtractor={(item: {item: UserType}): string =>UUID()}
         horizontal
         ItemSeparatorComponent={() => <View style={{width: 16}} />}
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9]}

@@ -2,7 +2,7 @@ import React, {FunctionComponent, ComponentProps} from 'react';
 import {View, StyleSheet, Dimensions, Text} from 'react-native';
 
 import {HStack, VStack} from './layouts';
-
+import {UUID} from '../utils/uuid'
 const {width} = Dimensions.get('screen');
 
 export const ProgressBarVerticalWithCircles: FunctionComponent<
@@ -34,9 +34,9 @@ export const ProgressBarVerticalWithCircles: FunctionComponent<
     <VStack marginTop={50} marginBottom={50} flex={1}>
       {progress.map(({status}, index) => {
         return (
-          <>
+          
             <View
-              key={index}
+              key={UUID()}
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -57,7 +57,7 @@ export const ProgressBarVerticalWithCircles: FunctionComponent<
                   }}></View>
               ) : null}
             </View>
-          </>
+       
         );
       })}
       {progress.map(({status}, index, self) => {

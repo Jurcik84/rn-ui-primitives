@@ -1,6 +1,7 @@
 import React, {createContext, useEffect, useState, useContext} from 'react';
 import HomeScreen from './cl-app/screen-main/views/section.container';
 import SecurityCode from './cl-app/screen-validate-code/views';
+import i18n from 'i18n-js';
 import {
   BasicTextInput,
   SingleDigitInput,
@@ -23,11 +24,15 @@ import {
 } from './cl-app/components/progress';
 import {ScrollView} from 'react-native-gesture-handler';
 
-export default function  App() {
+export default function App() {
   return (
-    <ScrollView contentContainerStyle={{
-      
-    }}>
+    <ScrollView contentContainerStyle={{}}>
+      {/* <Block marginTop={40}>
+        <Block.HStack>
+          <Block.Text>{i18n.translate('cat')}</Block.Text>
+          <Block.Text>{i18n.translate('dog')}</Block.Text>
+        </Block.HStack>
+      </Block> */}
       <ProgressBarHorizontalList />
       <ProgressBarVerticalWithCircles />
       <CardDoubleDecker />
