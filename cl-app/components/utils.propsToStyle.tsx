@@ -1,3 +1,4 @@
+import {StyleSheet} from 'react-native';
 const allStylesRN = [
   'alignContent',
   'alignItems',
@@ -94,10 +95,22 @@ const allStylesRN = [
   'zIndex',
 ];
 
-export type StylePropStyle = {
-  alignContent: 'flex-start'|'flex-end'|'center'|'stretch'|'space-between'|'space-around';
-  alignItems: 'flex-start'| 'flex-end'| 'center'| 'stretch'| 'baseline';
-  alignSelf: 'auto'| 'flex-start'| 'flex-end'| 'center'| 'stretch'| 'baseline';
+export type RNStyleTypes = {
+  alignContent:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'stretch'
+    | 'space-between'
+    | 'space-around';
+  alignItems: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+  alignSelf:
+    | 'auto'
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'stretch'
+    | 'baseline';
   aspectRatio: number;
   backfaceVisibility: any;
   backgroundColor: any;
@@ -120,15 +133,15 @@ export type StylePropStyle = {
   bottom: number | string;
   color: any;
   decomposedMatrix: any;
-  direction: 'inherit' | 'ltr' |'rtl';
-  display: 'none'| 'flex';
+  direction: 'inherit' | 'ltr' | 'rtl';
+  display: 'none' | 'flex';
   elevation: any;
   flex: number;
   flexBasis: any;
-  flexDirection: 'row' | 'row-reverse'|  'column'|  'column-reverse';
+  flexDirection: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   flexGrow: number;
   flexShrink: number;
-  flexWrap: 'wrap'| 'nowrap'| 'wrap-reverse';
+  flexWrap: 'wrap' | 'nowrap' | 'wrap-reverse';
   fontFamily: any;
   fontSize: number;
   fontStyle: any;
@@ -136,7 +149,13 @@ export type StylePropStyle = {
   fontWeight: any;
   height: number;
   includeFontPadding: any;
-  justifyContent: 'flex-start'| 'flex-end'| 'center'| 'space-between'| 'space-around'| 'space-evenly';
+  justifyContent:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly';
   left: number | string;
   letterSpacing: any;
   lineHeight: any;
@@ -161,9 +180,9 @@ export type StylePropStyle = {
   paddingRight: number | string;
   paddingTop: number | string;
   paddingVertical: number | string;
-  position: 'absolute'| 'relative';
+  position: 'absolute' | 'relative';
   resizeMode: any;
-  right:number | string;
+  right: number | string;
   rotation: any;
   scaleX: any;
   scaleY: any;
@@ -171,7 +190,7 @@ export type StylePropStyle = {
   shadowOffset: any;
   shadowOpacity: any;
   shadowRadius: any;
-  textAlign: 'auto'| 'left'| 'right'| 'center'| 'justify';
+  textAlign: 'auto' | 'left' | 'right' | 'center' | 'justify';
   textAlignVertical: any;
   textDecorationColor: any;
   textDecorationLine: any;
@@ -192,28 +211,30 @@ export type StylePropStyle = {
 
 export type LayoutTypes = {
   children?: React.ReactNode;
-  style?: {
-    [propName: string]: any;
-  };
 };
 
-export type GeneralObjectType = {[propName: string]: any};
+export type GeneralObjectType = Partial<RNStyleTypes>;
 
-export function transformPropsIntoStyle(
-  props: GeneralObjectType
-): GeneralObjectType {
+export function getStyleFromProps(props: GeneralObjectType): GeneralObjectType {
+  const compStyle: Partial<RNStyleTypes> = {};
 
-   // 
-  const compStyle: GeneralObjectType = {};
-
-  // 
   Object.keys(props).forEach((propName: string) => {
-    if (allStylesRN.some((styleProp) => propName === styleProp)) {
-      compStyle[propName] = props[propName];
-    }
+    allStylesRN.includes(propName)
+      ? (compStyle[propName] = props[propName])
+      : null;
   });
 
-  // 
-
   return compStyle;
+}
+
+export function getComponentProps(props: GeneralObjectType): GeneralObjectType {
+  const propsForComp: Partial<RNStyleTypes> = {};
+
+  Object.keys(props).forEach((propName: string) => {
+    !allStylesRN.includes(propName)
+      ? (propsForComp[propName] = props[propName])
+      : null;
+  });
+
+  return propsForComp;
 }

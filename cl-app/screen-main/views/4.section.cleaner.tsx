@@ -26,7 +26,7 @@ const App = () => {
          h6
         color="red">Right Title</Block.Text>
       </HStack>
-      <FlatList<User>
+      <FlatList
        keyExtractor={(item: {item: UserType}): string =>UUID()}
         horizontal
         ItemSeparatorComponent={() => <View style={{width: 16}} />}

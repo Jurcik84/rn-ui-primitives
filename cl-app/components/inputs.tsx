@@ -1,7 +1,7 @@
 import React, {FunctionComponent, ComponentProps} from 'react';
 import {StyleSheet, TextInput, Text} from 'react-native';
 
-import {transformPropsIntoStyle, StylePropStyle} from './utils.propsToStyle';
+import {getStyleFromProps, RNStyleTypes} from './utils.propsToStyle';
 import {HStack, VStack} from './layouts';
 
 const bgColor = '#EDF1F766';
@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
   },
 });
 
-type InputTypes = {} & Partial<StylePropStyle> &
+type InputTypes = {} & Partial<RNStyleTypes> &
   ComponentProps<typeof TextInput>;
 
 export const BasicTextInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>
@@ -52,7 +52,7 @@ export const BasicTextInput: FunctionComponent<InputTypes> = (props) => {
 };
 export const SingleDigitInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>
@@ -68,7 +68,7 @@ export const SingleDigitInput: FunctionComponent<InputTypes> = (props) => {
 };
 export const PasswordInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>
@@ -84,7 +84,7 @@ export const PasswordInput: FunctionComponent<InputTypes> = (props) => {
 // icone and nu prefix on left
 export const MobileNumberInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>
@@ -119,7 +119,7 @@ export const MobileNumberInput: FunctionComponent<InputTypes> = (props) => {
 
 export const EmailInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>
@@ -133,7 +133,7 @@ export const EmailInput: FunctionComponent<InputTypes> = (props) => {
 };
 export const PostCodeInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>
@@ -144,7 +144,7 @@ export const PostCodeInput: FunctionComponent<InputTypes> = (props) => {
 };
 export const SearchAddressInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>
@@ -156,7 +156,7 @@ export const SearchAddressInput: FunctionComponent<InputTypes> = (props) => {
 
 export const FullNameInput: FunctionComponent<InputTypes> = (props) => {
   const {children, style = {}} = props;
-  const styleForElement = transformPropsIntoStyle(props);
+  const styleForElement = getStyleFromProps(props);
   return (
     <VStack>
       <Text>Label</Text>

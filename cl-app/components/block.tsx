@@ -1,6 +1,6 @@
-import React, {ComponentProps, FunctionComponent} from 'react';
+import React, {ComponentProps, FunctionComponent, useState} from 'react';
 import {View, Text, Image, FlatList, ScrollView} from 'react-native';
-import {transformPropsIntoStyle, StylePropStyle} from './utils.propsToStyle';
+import {getStyleFromProps, RNStyleTypes} from './utils.propsToStyle';
 
 import {HStack, VStack} from './layouts';
 
@@ -9,11 +9,12 @@ type TextSizeTypes = {
   h2: boolean;
   h3: boolean;
   h4: boolean;
-  h5:boolean, h6:boolean,
-  children: string
+  h5: boolean;
+  h6: boolean;
+  children: string;
 };
 
-type BlockTypes = StylePropStyle;
+type BlockTypes = RNStyleTypes;
 
 export class Block extends React.Component<
   BlockTypes & ComponentProps<typeof VStack> & ComponentProps<typeof View>,
@@ -24,12 +25,8 @@ export class Block extends React.Component<
   componentDidUpdate() {}
   render(): React.ReactNode {
     const {children, style = {}} = this.props;
-    const styleFromProps = transformPropsIntoStyle(this.props);
-    return (
-      <VStack {...style} style={[{flex: 1}, styleFromProps]}>
-        {children}
-      </VStack>
-    );
+    const styleFromProps = getStyleFromProps(this.props || {});
+    return <VStack style={[styleFromProps, style]}>{children}</VStack>;
   }
 
   static Circle = (props: BlockTypes & ComponentProps<typeof View>) => {
@@ -49,7 +46,7 @@ export class Block extends React.Component<
   static Text = (
     props: Partial<BlockTypes & TextSizeTypes & ComponentProps<typeof Text>>,
   ) => {
-    const styleFromProps = transformPropsIntoStyle(props);
+    const styleFromProps = getStyleFromProps(props);
     const {children = '', h1, h2, h3, h4, h5, h6, style = {}} = props;
 
     let baseFontSzie = 16;
@@ -74,6 +71,7 @@ export class Block extends React.Component<
       <Text
         style={[
           styleFromProps,
+          style,
           {
             fontSize: baseFontSzie,
           },
@@ -88,7 +86,9 @@ export class Block extends React.Component<
       <Text>{children.toUpperCase()}</Text>
     ) : null;
   };
-  static Divider = (props: Partial<BlockTypes & ComponentProps<typeof View>>) => {
+  static Divider = (
+    props: Partial<BlockTypes & ComponentProps<typeof View>>,
+  ) => {
     return (
       <View
         style={{
@@ -98,12 +98,14 @@ export class Block extends React.Component<
   };
   static HStack = HStack;
   static VStack = VStack;
-  static ForEach = (props:Partial< BlockTypes & ComponentProps<typeof FlatList>>) => {
+  static ForEach = (
+    props: Partial<BlockTypes & ComponentProps<typeof FlatList>>,
+  ) => {
     return <FlatList {...props} />;
   };
   static Image = (props: BlockTypes & ComponentProps<typeof Image>) => {
     const {style = {}} = props;
-    const styleFromProps = transformPropsIntoStyle(props);
+    const styleFromProps = getStyleFromProps(props);
     return <Image style={[styleFromProps, style]} {...props} />;
   };
 
@@ -111,9 +113,18 @@ export class Block extends React.Component<
     props: BlockTypes & ComponentProps<typeof ScrollView>,
   ) => {
     const {style = {}} = props;
-    const styleFromProps = transformPropsIntoStyle(props);
+    const styleFromProps = getStyleFromProps(props);
     return (
       <ScrollView {...props} contentContainerStyle={[styleFromProps, style]} />
     );
   };
 }
+
+function TabView(props) {
+  const [tabState, setTabState] = useState()
+  return null;
+}
+
+TabView.TabItem = (props) => {
+  return null;
+};

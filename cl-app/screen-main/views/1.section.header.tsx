@@ -1,21 +1,7 @@
-import React, {useState, useEffect, useRef, useMemo} from 'react';
-import {
-  View,
-  Animated,
-  StyleSheet,
-  Image,
-  Dimensions,
-  Easing,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  FlatList,
-  ScrollView,
-  TextInput,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {  TextInput} from 'react-native-gesture-handler';
 
-import {VStack} from '../../components/layouts';
+import { VStack } from "../../components/layouts";
 import Text from '../../components/fonts';
 
 export default function ({}) {
@@ -27,7 +13,8 @@ export default function ({}) {
       backgroundColor="#FF0049"
       height={23 * 9}
       justifyContent="center">
-      <Text marginBottom={8} fontWeight={'800'} fontSize={17} color="#fff">
+      <Text
+      marginBottom={8} fontWeight={'800'} fontSize={17} color="#fff">
         Hey William
       </Text>
       <Text marginBottom={8} fontSize={15} color="#fff">

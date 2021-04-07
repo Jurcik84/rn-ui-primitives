@@ -11,6 +11,7 @@ const borderColor = '#CACADA52';
 const App = () => {
   return (
     <VStack
+      
       paddingTop={19}
       backgroundColor={bgColor}
       paddingLeft={20}

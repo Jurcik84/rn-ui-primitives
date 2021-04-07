@@ -1,5 +1,5 @@
-import  {Reducer} from 'react'
-import {State,Actions, ACtionsTypes} from './screen.types'
+import { Reducer } from 'react'
+import { Actions, ACtionsTypes, State } from './screen.types'
 
 export const mainScreenReducer: Reducer<State, Actions> = (
     state,

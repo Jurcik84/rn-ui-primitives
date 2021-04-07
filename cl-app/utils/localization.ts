@@ -11,3 +11,8 @@ export const initialize = () => {
     }
   }
 };
+
+
+
+// RESOURCES
+// https://dev.to/merlier/how-to-internationalize-a-react-native-app-43fa
