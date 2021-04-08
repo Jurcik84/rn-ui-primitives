@@ -4,7 +4,7 @@ import React, {
   FunctionComponent,
   useEffect,
 } from 'react';
-import {View, Animated, Dimensions} from 'react-native';
+import {View, Animated, Dimensions, Alert} from 'react-native';
 
 import SplashScreen from 'react-native-splash-screen';
 import HomeScreen from './cl-app/screen-main/views/section.container';
@@ -49,57 +49,38 @@ import {
   useNavigationView,
 } from './cl-app/components/navigation.view';
 
+import {useCameraRoll} from '@react-native-community/hooks';
+
+// error handling
+import {
+  setJSExceptionHandler,
+  setNativeExceptionHandler,
+} from 'react-native-exception-handler';
+
 const {width} = Dimensions.get('screen');
 
+
+// ERROR  START------------------------------------
+const handleError = (error, isFatal) => {
+  // fetch ?
+  console.log(error, isFatal);
+  // error.name ? into alert
+};
+
+setJSExceptionHandler((error, isFatal) => {
+  console.log('caught global error');
+  handleError(error, isFatal);
+}, true);
+
+setNativeExceptionHandler((errorString) => {});
+// ERROR  END------------------------------------
+
+
 export default function App() {
-  return <VStack flex={1} backgroundColor={Color.black}></VStack>;
+  const [photos, getPhotos, saveToCameraRoll] = useCameraRoll();
+  return (
+   <VStack>
+     
+   </VStack>
+  );
 }
-
-// {
-//   /* <Block padding={30}>
-// <Block.Image
-//   height={100}
-//   width={100}
-//   borderWidth={1}
-//   source={{
-//     uri:
-//       'https://static.wixstatic.com/media/21f9f0e9b767823b051d09a6dbbaf022.jpg/v1/fill/w_360,h_360,al_c,lg_1,q_80/Moving%20Boxes.jpg',
-//   }}
-// />
-// <Block.Text>{''}</Block.Text>
-// </Block> */
-// }
-
-// {
-//   /* <ScrollView contentContainerStyle={{}}>
-// <Block marginTop={40}>
-//   <Block.HStack>
-//     <Block.Text>{i18n.translate('cat')}</Block.Text>
-//     <Block.Text>{i18n.translate('dog')}</Block.Text>
-//   </Block.HStack>
-// </Block>
-// <ProgressBarHorizontalList />
-// <ProgressBarVerticalWithCircles />
-// <CardDoubleDecker />
-// <HomeScreen />
-// <CardWithTextOnImage />
-// <CardTextUnderImage />
-// <BasicTextInput />
-// <SingleDigitInput />
-// <PasswordInput />
-// <MobileNumberInput />
-// <FullNameInput />
-// <EmailInput />
-// </ScrollView> */
-// }
-
-// // import React, { useState } from 'react';
-// // function withCounterState(WrappedComponent) {
-// //    return function (...props) {
-// //       const [counter, setCounter] = useState(0);
-
-// //       props['counter'] = counter;
-// //       props['setCounter'] = setCounter;
-// //       return <WrappedComponent {...props} />;
-// //    }
-// // }

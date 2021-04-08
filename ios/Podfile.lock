@@ -339,6 +339,8 @@ PODS:
     - React-jsi (= 0.63.4)
   - ReactNativeCameraKit (1.0.0):
     - React
+  - ReactNativeExceptionHandler (2.10.10):
+    - React-Core
   - RealmJS (10.2.0):
     - GCDWebServer
     - React
@@ -421,6 +423,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeCameraKit (from `../node_modules/react-native-camera-kit`)
+  - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - RealmJS (from `../node_modules/realm`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
@@ -526,6 +529,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeCameraKit:
     :path: "../node_modules/react-native-camera-kit"
+  ReactNativeExceptionHandler:
+    :path: "../node_modules/react-native-exception-handler"
   RealmJS:
     :path: "../node_modules/realm"
   RNCAsyncStorage:
@@ -600,6 +605,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   ReactNativeCameraKit: 5026c5884617eab92b096b62262eec2bbf9eb647
+  ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
   RealmJS: 5195064e9aeccf94ae3756bd9d0f2301b9074b07
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f

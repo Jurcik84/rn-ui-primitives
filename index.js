@@ -1,8 +1,11 @@
 
+// @flow
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { AppRegistry, Platform } from 'react-native';
 // import codePush from 'react-native-code-push';
+
+
 
 import App from './App';
 import { name as appName } from './app.json';
