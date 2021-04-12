@@ -1,8 +1,5 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import SyntaxHighlighter from 'react-native-syntax-highlighter'; // 2.0.0
-import {tomorrow} from 'react-syntax-highlighter/styles/prism'; // 7.0.1
-
 import AnimatedApp from './Animations';
 
 function VStack(props) {
@@ -12,7 +9,6 @@ function VStack(props) {
       style={{
         flexDirection: 'column',
         borderWidth: 1,
-        height: 200,
         justifyContent: 'space-between',
       }}>
       {children}
@@ -26,9 +22,8 @@ function HStack(props) {
     <View
       style={{
         flexDirection: 'row',
-        borderWidth: 1,
         justifyContent: 'space-between',
-        flex: 1,
+       
       }}>
       {children}
     </View>
@@ -51,7 +46,16 @@ function GridStack(props) {
 export default function App() {
   return (
     <View style={{backgroundColor: '#E87A90', flex: 1, marginTop: 50}}>
-    
+     <HStack>
+       <Text>ahoj</Text>
+       <Text>ahoj</Text>
+       <Text>ahoj</Text>
+     </HStack>
+     <VStack>
+       <Text>ahoj</Text>
+       <Text>ahoj</Text>
+       <Text>ahoj</Text>
+     </VStack>
     </View>
   );
 }
