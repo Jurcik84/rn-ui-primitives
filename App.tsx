@@ -51,7 +51,7 @@ function GridStack(props) {
 export default function App() {
   return (
     <View style={{backgroundColor: '#E87A90', flex: 1, marginTop: 50}}>
-     
+   
     </View>
   );
 }
