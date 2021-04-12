@@ -51,11 +51,7 @@ export default function App() {
        <Text>ahoj</Text>
        <Text>ahoj</Text>
      </HStack>
-     <VStack>
-       <Text>ahoj</Text>
-       <Text>ahoj</Text>
-       <Text>ahoj</Text>
-     </VStack>
+    
     </View>
   );
 }
