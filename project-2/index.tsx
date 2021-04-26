@@ -34,7 +34,14 @@ const Progress: React.FC<ProgressTypes> = ({step, steps, height}) => {
         {step}/{steps}
       </Text>
       <View
-        onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
+        onLayout={({
+          nativeEvent: {
+            layout: {width},
+          },
+        }) => {
+          setWidth(width);
+          console.log('width', width);
+        }}
         style={{
           height,
           width: 300,

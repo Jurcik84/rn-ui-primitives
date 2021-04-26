@@ -3,8 +3,6 @@ import {
   Animated,
   Dimensions,
   Image,
-  FlatList,
-  Text,
   View,
   StyleSheet,
   StatusBar,

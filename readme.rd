@@ -46,3 +46,29 @@ git remote rename new-origin origin
 
 ### Done! Now your local git repo is connected to "new repo" remote
 ### which has all the branches, tags and commits history.
+
+To make a new directory do:
+
+   mkdir directory-name
+To remove a directory that does not files inside do:
+   rmdir directory-name
+If the directory has files, you can do the following:
+   rm -rv directory-name
+and you will be asked for each file (or subdirectory) if you want to remove it; or
+   rm -frv directory-name
+that will remove all files (and subdirectories) without asking any questions. 
+
+Changing the working directory
+To change ("enter") into a directory do:
+
+   cd directory-name
+This assumes that the new directory is a subdirectory of the one you are currently working on. If that is not the case, you will have to type the name, for example:
+   cd /usr/local/share/bin
+To go to your home directory do simply:
+   cd
+
+
+
+   To change the name of a directory do:
+
+   mv directory-name new-name
